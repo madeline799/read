@@ -1,0 +1,113 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+		{% block seo %}
+		{% endblock seo %}
+
+		{% block css %}
+		<link href="{% static "css/style.css" %}" rel="stylesheet">
+		<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+		<link href="{% static "css/jquery-ui.min.css" %}" rel="stylesheet">
+		{% endblock css %}
+
+		{% block extra_site_css %}
+		{% endblock extra_site_css %}
+
+		{% block extra_app_css %}
+		{% endblock extra_app_css %}
+
+		{% block extra_page_css %}
+		{% endblock extra_page_css %}
+
+		{% block extra_para %}
+		{% endblock extra_para %}
+	</head>
+
+	<body>
+		{% block header %}
+		{% endblock header %}
+
+		{% block extra_site_header %}
+		{% endblock extra_site_header %}
+
+		{% block extra_app_header %}
+		{% endblock extra_app_header %}
+
+		{% block extra_page_header %}
+		{% endblock extra_page_header %}
+
+		{% block content %}
+
+			{% block indeximage %}
+			{% endblock indeximage %}
+
+			{% block left %}
+			{% endblock left %}
+
+			{% block right %}
+			{% endblock right %}
+
+		{% endblock content %}
+
+		{% block turn_to_top %}
+			<div class="go-top">
+				<div class="arrow">返回<br>顶部</div>
+			</div>
+		{% endblock turn_to_top %}
+
+		{% block footer %}
+			<div class="container small hidden-xs" id="footer">
+				<div id="footer-site">
+					<div class="container">
+						<hr>
+					</div>
+					<div class="col-xs-3 col-border">
+						<p><strong>关于书行</strong></p>
+						<p>书海中漫步 只为知识而行走</p>
+					</div>
+
+					<div class="col-xs-3 col-border">
+						<p><strong>旗下网站</strong></p>
+						<p><a href="http://www.hidict.cn/" class="fo" target="_blank">问词</a></p>
+						<!-- <p><a href="http://www.readage.com/" class="fo">阅知</a></p> -->
+					</div>
+
+					<div class="col-xs-3 col-border">
+						<p><strong>备案许可</strong></p>
+						<p><a href="http://www.miibeian.gov.cn/" class="fo" target="_blank">京ICP备14007056号</a></p>
+					</div>
+
+					<div class="col-xs-3">
+						<p><strong>版权信息</strong></p>
+						<p>&#169 bankofbook.com</p>
+					</div>
+				</div>
+			</div>
+		{% endblock footer %}
+
+		{% block js %}
+		<script type="text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/style.js" %}"></script>
+		{% endblock js %}
+
+		{% block extra_site_js %}
+		<script type="text/javascript" src="http://www.hidict.cn/static/js/hidict_service.js"></script>		
+		{% endblock extra_site_js %}
+
+		{% block extra_app_js %}
+		{% endblock extra_app_js %}
+
+		{% block extra_page_js %}
+		{% endblock extra_page_js %}
+	</body>
+
+</html>

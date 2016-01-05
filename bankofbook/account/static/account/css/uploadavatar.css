@@ -1,0 +1,46 @@
+body{
+	background: #F5F5F5;
+}
+
+#uploadAvatarBtnLayout {
+	position: relative;
+}
+
+#uploadAvatarBtnLayout {
+	overflow: hidden;
+}
+
+#uploadAvatarBtnLayout button {
+	height: 2.5em;
+	min-width: 300px;
+}
+
+#uploadAvatarInputFile {
+	position: absolute;
+	top: 0;
+	left: -20px;
+	font-size: 300%;
+}
+
+#uploadAvatarCropSubmit {
+	margin-left: 5em;
+	width: 8em;
+	height: 2.5em;
+}
+
+#uploadAvatarPreviewArea {
+	float: left;
+	margin-left: 5em;
+}
+
+#uploadAvatarSelectArea, #uploadAvatarPreviewArea {
+	display: inline-block;
+}
+
+@media (max-width: 550px) {
+	#uploadAvatarPreviewArea {
+		float: left;
+		margin-top: 30px;
+	}
+
+}

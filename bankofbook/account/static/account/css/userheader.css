@@ -1,0 +1,79 @@
+.navbar-height-fixed {
+	min-height: 2.5em;
+	height: 2.5em;
+}
+
+.navbar-back {
+	background-color: #F5F5F5;
+}
+
+.a-font{
+	font-size: 12px;
+}
+
+.navbar-nav > li > a {
+	padding-top: 10px;
+	padding-right: 0;
+	padding-bottom: 10px;
+}
+
+.nav > li > a {
+	padding-bottom: 5px;
+}
+
+.navbar-padding {
+	padding: 3px 6px;
+}
+
+.login-color {
+	color: #206DB2;
+}
+
+.register-hover:hover {
+	color: #206DB2;
+}
+
+@media (min-width: 768px) {
+	#logo-mobile, #searchform-mobile {
+		display: none;
+	}
+}
+
+@media (max-width: 768px) {
+	#logo-mobile, #searchform-mobile {
+		display: inline-block;
+	}
+
+	.logodomain-mar {
+		width: auto;
+		height: 40px;
+		margin: 5px 15px;
+	}
+
+	.navbar-height-fixed {
+		min-height: 3em;
+		height: 3em;
+	}
+
+	.header-back {
+		background-color: #F5F5F5;
+	}
+
+	.navbar-default .navbar-form {
+		border: 0;
+	}
+
+	#slogan {
+		display: none;
+	}
+
+	.chevron-right {
+		float: left;
+	}
+}
+
+@media (max-width: 380px){
+	.nav-reheader {
+		position:fixed;width:350px;left:0px;top:0px;
+	}
+}

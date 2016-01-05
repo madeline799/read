@@ -1,0 +1,289 @@
+{% extends "library/base.html" %}
+{% load staticfiles %}
+
+{% block extra_page_css %}
+	<link rel="stylesheet" href="{% static "library/css/bookhtml.css" %}">
+	<link rel="stylesheet" href="{% static "library/css/annotator.min.css" %}">
+{% endblock extra_page_css %}
+
+{% block extra_para %}
+<script type="text/javascript">
+	var offset_from_server={{offset}};
+</script>
+{% endblock extra_para %}
+
+
+{% block content %}
+
+<div id="annotator" style="display:none;">
+	<div class="modal fade in" id="library-signin" tabindex="-1" role="dialog" aria-labelledby="library-modal-title" aria-hidden="false" style="display:block;">
+		<div class="modal-backdrop fade in" style="height:100%;"></div>
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header" style="border-bottom:1px solid #78D3D7;">
+						<button id="annotator-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<span>
+							<a href="/">
+								<img alt="书行-官网 | Bankofbook Official Site"
+								style="height: 40px; margin:5px; margin-right:2em;"
+								class="img-responsive"
+								src="{% static "img/logo-domain.png" %}">
+							</a>
+						</span><h4 class="modal-title" id="library-modal-title"><strong>登录书行帐号</strong></h4>
+						<div id="library-signup">
+									没有帐号,<a href="{% url "account:signup" %}">我要注册</a>
+						</div>
+					</div>
+				<div class="modal-body" style="text-align:center;">
+					<form id="contact_form" name="contact_form" action="{% url "account:signin" booknumber  %}" method="post">
+					{% csrf_token %}
+					<p></p>
+						<label class="sr-only">用户名:</label>
+						{% if user.is_authenticated %}
+						已登录用户名：{{ user.username }}<BR><BR>
+						{% else %}
+						<input type="text" id="library-username" name="username"  placeholder="用户名">
+						{% endif %}
+						<p></p><p></p>
+						<label class="sr-only">密码:</label>
+						<input type="password" id="library-password" name="password" placeholder="密码">
+						<br></br>
+						<input type="submit" id="library-submit" value="立即登录">
+						<br></br><br>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% if contents %}
+<div id="sidebar">
+	<div id="panels">
+		<span class="glyphicon glyphicon-list-alt contents" aria-hidden="true"></span>
+		<span class="contents">Contents</span>
+	</div>
+	<div id="tocView" class="view">
+		<ul>
+			{% autoescape off %}
+				{% for content in contents %}
+					<li class="list_item">
+						{{ content }}
+					</li>
+				{% endfor %}
+			{% endautoescape %}
+		</ul>
+	</div>
+</div>
+{% endif %}
+
+{% if contents %}
+<div id="opener">
+	<a id="slider">
+		<div id="rectangle" class="left-rectangle"></div>
+		<div class="circle">目录</div>
+	</a>
+</div>
+{% endif %}
+
+<div id="main">
+	<div id="viewer" class="container">
+		<map name="annotator-plugin">
+		<area id ="hidict" shape="rect" coords="0,0,36,36" alt="问词查询" title="问词查询">
+		<a id="annotationIconCover" href="javascript:annotation_onclick();">
+			<area id ="annotation-icon" shape="rect" coords="44,0,80,36" alt="注释" title="注释">
+		</a>
+		</map>
+	{% if templatestring %}
+		{% autoescape off %}
+			{{ templatestring }}
+		{% endautoescape %}
+	{% else %}
+		<div id="current-book">
+			{% if currentbook %}
+				<img src="{% static "library/img/bankofbook-toy.png" %}">
+				<div id="current-title">《{{ currentbook.title }}》正在奋力构建中～～～<br>
+					<span>书而行之，期待你的声音</span>
+					<span class="glyphicon glyphicon-headphones" aria-hidden="true"></span>
+				</div>
+			{% endif %}
+		</div>
+	{% endif %}
+	</div>
+</div>
+{% endblock content %}
+
+
+{% block extra_site_js %}
+{% endblock extra_site_js %}
+
+
+{% block extra_page_js %}
+<script type="text/javascript" src="{% static "library/js/bookhtml.js" %}"></script>
+<script type="text/javascript" src="{% static "library/js/jquery.scrollTo.js" %}"></script>
+<script type="text/javascript" src="{% static "library/js/layzr.js" %}"></script>
+<script type="text/javascript" src="{% static "library/js/annotator-full.min.js" %}"></script>
+<script type="text/javascript" src="{% static "library/js/hidict.js" %}"></script>
+<script type="text/javascript">
+var ele = document.getElementById("main");
+var dictIcon = document.getElementById("dictIcon");
+var annotationIcon = document.getElementById("annotation-icon");
+var annotatorButton = $("div.annotator-adder");
+var annotatorOuter = $("div.annotator-outer");
+var body = $("body");
+var annotatorClose = $("#annotator-close");
+var librarySignin = $("#library-signin");
+var annotatorEditor = $(".annotator-outer.annotator-editor");
+
+
+function annotation_onclick(){
+	{% if not user.is_authenticated %}
+		userNotLogged();
+	{% else %}
+		userIsLogged();
+	{% endif %}
+}
+
+function userNotLogged(){
+	body.addClass("modal-open");
+	librarySignin.addClass("in");
+	librarySignin.attr("aria-hidden", "false");
+	document.getElementById("library-signin").style.display = "block";
+	document.getElementById("annotator").style.display = "block";
+	document.getElementById("dictIcon").style.display = "none";
+	annotatorOuter.attr("style","display:none");
+
+	annotatorClose.on("click", function(){
+		body.removeClass("modal-open");
+		librarySignin.removeClass("in");
+		librarySignin.attr("aria-hidden", "true");
+		document.getElementById("library-signin").style.display = "none";
+		document.getElementById("annotator").style.display = "none";
+	});
+}
+
+var appAnnotator = new Annotator(ele);
+	appAnnotator.addPlugin(
+		'Store', {prefix:'http://annotate.bankofbook.com/api'}
+	);
+$("div.annotator-adder").css("visibility","hidden");
+
+{% if user.is_authenticated %}
+var user = '{{ user.username }}';
+
+	appAnnotator.addPlugin(
+		'Auth', {tokenUrl: '{% url 'library:generate_token' user %}'}
+	).addPlugin(
+		'AnnotateItPermissions'
+	);
+
+function userIsLogged(){
+appAnnotator.onAdderClick();
+	var flag = annotatorEditor.hasClass("annotator-hide");
+	if(!flag){
+		document.getElementById("dictIcon").style.display = "none";
+	}
+}
+{% endif %}
+</script>
+<script type="text/javascript">
+var constant_threshhout=300;
+var offset=0;
+
+var timeout=constant_threshhout;
+
+if (typeof offset_from_server == "number") {
+	offset = offset_from_server;
+}
+
+window.onscroll=function(){
+	var scroll_top;
+	var scroll_height;
+
+	if (document.documentElement && document.documentElement.scrollTop) {
+		scroll_top = document.documentElement.scrollTop;
+		scroll_height = document.documentElement.scrollHeight;
+	}
+	else if (document.body) {
+		scroll_top = document.body.scrollTop;
+		scroll_height = document.body.scrollHeight;
+	}
+
+	offset =  scroll_top / scroll_height;
+	setTimeout("countdown()",constant_threshhout*1000)
+}
+
+
+function syncProgress()
+{
+	url = window.location.href
+	idx = url.indexOf("#")
+	if ( idx != -1 ){
+		url = url.substr(0,idx)
+	}
+
+	$.ajax({
+		type: 'POST',
+		async : false,
+		url: url,
+		data: {
+			 offset : offset,
+		},
+		dataType: "text",
+		success: function( json ) {
+		},
+		error: function(callBackData){
+		},
+	});
+}
+
+function settimeout(){
+	timeout=constant_threshhout;
+}
+window.onkeydown = settimeout;
+window.onmouseover = settimeout;
+
+setTimeout("countdown()",constant_threshhout*1000)
+function countdown()
+{
+	syncProgress();;
+}
+
+
+function confirmExit()
+{
+	syncProgress();
+}
+window.onbeforeunload = confirmExit;
+$(function () {
+	$("a").click(function (){
+		window.onbeforeunload = null;
+	});
+});
+
+$(document).ready(function(){
+	var layzr = new Layzr();
+	{% if user.is_authenticated %}
+		if(offset>0){
+			var r=confirm("从上次离开位置继续阅读?");
+			if (r==true){
+				var scroll_height;
+				if (document.documentElement && document.documentElement.scrollTop) {
+					scroll_height = document.documentElement.scrollHeight;
+				}
+				else if (document.body) {
+					scroll_height = document.body.scrollHeight;
+				}
+				$(window).scrollTo(scroll_height*offset);
+		}
+	}else{
+		;
+	}
+	{% endif %}
+});
+
+</script>
+
+{% endblock extra_page_js %}

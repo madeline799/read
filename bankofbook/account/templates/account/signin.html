@@ -1,0 +1,65 @@
+{% extends "account/base.html" %}
+{% load staticfiles %}
+
+{% block seo %}
+	<meta name="description" content="Registration">
+	<title>
+		{% block title %}
+		登录&nbsp;&nbsp;|&nbsp;&nbsp;书行
+		{% endblock title %}
+	</title>
+{% endblock seo %}
+
+{% block extra_page_css %}
+ <link rel="stylesheet" href="{% static "account/css/signin.css" %}">
+{% endblock extra_page_css %}
+
+{% block extra_site_header %}
+{% endblock extra_site_header %}
+
+{% block content %}
+<div class="container">
+	<a href="{% url "library:index" %}">
+	<img src="{% static "img/logo-domain.png" %}" class="imgrs" alt="Responsive image">
+	</a>
+
+	<div id="horline">
+		<hr class="hr-margin"></hr>
+	</div>
+
+	<div id="reg-left" class="table-size">
+		<table id="table-head" class="table-size">
+			<tr>
+				<td class="regbg-head">用户登录</td>
+				<td class="regbg-right-text">
+					没有帐号,<a href="{% url "account:signup" %}"><span class="login">我要注册</span></a>
+				</td>
+			</tr>
+		</table>
+
+		<table class="table-size">
+			<tr>
+				<td class="table-body">
+					<form id="contact_form" class="contact_form" name="contact_form" fv-validate="true"  fv-msgpanel="formerror" action="{% url "account:signin" None %}" method="post">
+				{% csrf_token %}
+				<p></p>
+							<label class="sr-only">用户名:</label>
+							{% if user.is_authenticated %}
+							已登录用户名：{{ user.username }}<BR><BR>
+							{% else %}
+							<input type="text" name="username"  placeholder="用户名" />
+							{% endif %}
+							<p></p>
+							<label class="sr-only">密码:</label>
+							<input type="password"  name="password" placeholder="密码" />
+							<br></br>
+							<input type="submit" id ="reg-button" class="regbtn" value="立即登录"  />
+							<br></br>
+				</form>
+				</td>
+			</tr>
+
+		</table>
+	</div>
+
+{% endblock content %}

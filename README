@@ -1,0 +1,4 @@
+1. put your code under /pb/
+2. run deploy.sh to setup the env
+3. then you can use django developing server to to dev
+4. steps 2 aslo deploy the code to the machine, you are working on.

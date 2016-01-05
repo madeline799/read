@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block extra_app_css %}
+<link href="{% static "account/css/baseaccount.css" %}" rel="stylesheet">
+{% endblock extra_app_css %}
+
+{% block extra_app_js %}
+<script src="{% static 'account/js/FormValidator.1.0.js' %}"></script>
+{% endblock extra_app_js %}
+

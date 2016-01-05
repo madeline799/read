@@ -1,0 +1,230 @@
+.bankofbook-logo {
+	width: auto;
+	height: 40px;
+	margin: 2px;
+}
+
+.bankofbook-index {
+	width: 100%;
+	max-height: 220px;
+	height: 100%;
+}
+
+ a.fo:hover, a.fo:link { 
+	text-decoration: none;
+}
+
+.category-left {
+	float: left;
+}
+
+.form-submit, .form-group {
+	float: left;
+	margin-left: 400px;
+}
+
+.form-renavbar {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	padding: 0px 5px 0;
+}
+
+.navbar-reright {
+	margin-right: -15px;
+	float: right !important;
+}
+
+span.glyphicon-th-list, span.glyphicon-th {
+	font-size: 120%;
+	color: #666;
+}
+
+.navbar-bottom {
+	margin-bottom: 0;
+}
+
+.lcc-color {
+	color: #0D56A6;
+}
+
+.footer-site {
+	position: absolute;
+	bottom: 0;
+}
+
+.wordimg-share {
+	display: none; 
+	position: absolute; 
+	cursor: pointer;
+	z-index: 999;
+}
+
+.popup-div-site {
+	z-index: 9999;
+	max-width: 20.2em;
+	width: auto;
+	min-height: 10em;
+	height: auto;
+	border-left: .2em solid rgb(112,186,224);
+	border-right: .2em solid rgb(112,186,224);
+	border-bottom: .2em solid rgb(112,186,224);
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+	background: #F7F7F7;
+	position: absolute;
+}
+
+.popup-top-site {
+	z-index: 99999;
+	background: rgb(112,186,224);
+	height: auto;
+	width: auto;
+	max-width: 20em;
+	color: #fff;
+	vertical-align: middle;
+	padding-left: 1.2em;
+	padding-top: .2em;
+	border-top-left-radius: 1em;
+	border-top-right-radius: 1em;
+}
+
+.popup-line {
+	color: #fff;
+	max-width: 20.2em;
+	width: auto;
+	margin-top: -.2em;
+}
+
+.selection-word {
+	color: #000;
+	font-size: 1.2em;
+	font-weight: 500;
+	padding-top: .5em;
+	padding-left: 1.2em;
+	padding-right: 1.2em;
+	height: auto;
+	width: auto;
+	max-width: 20em;
+	margin-top: .5em;
+	background: #F7F7F7;
+}
+
+.word-explanation {
+	color: #555;
+	font-size: .8em;
+	font-weight: 300;
+	padding-bottom: .5em;
+	padding-left: 1.2em;
+	padding-right: 1.2em;
+	display: block;
+}
+
+.word-search-div {
+	color: rgb(112,186,224);
+	border: 0;
+	font-size: .8em;
+	height: 1.5em;
+	background: #EDEDED;
+}
+
+.rectangle {
+	width: .6em;
+	height: 1.2em;
+	background: rgb(112,186,224);
+}
+
+.header-bottom {
+	border-bottom:2px solid #449ec4;
+}
+
+#logo, #searchform{
+	display: inline-block;
+}
+
+.bg-primary:hover {
+	background-color: #468AC5;
+	color: #FFF;
+}
+
+.rectangle, .word-search-div {
+	float: left;
+	margin-bottom: 2em;
+}
+
+.vertical-dir {
+	vertical-align: middle;
+}
+
+.search-mar {
+	margin:auto auto auto -300px;
+}
+
+
+
+@media (min-width: 768px) {
+	#navigation-small {
+		display: none;
+	}
+}
+
+@media (max-width: 768px) {
+	#navigation-large {
+		display: none;
+	}
+
+	#logo, #searchform {
+		display: none;
+	}
+
+	#search {
+		width: 150%;
+	}
+
+	.form-submit, .form-group {
+		margin-left: 102px;
+	}
+
+	.bankofbook-index {
+		margin-top: 12px;
+	}
+}
+
+@media screen and (min-width: 769px) and (max-width: 992px){
+	#search {
+		width: 200%;
+	}
+
+	.form-submit {
+		margin-left: 200px;
+	}
+}
+@media (max-width: 620px){
+	#search {
+		width: 100%;
+	}
+
+	.form-submit, .form-group {
+		margin-left: 5px;
+	}
+}
+
+@media (max-width: 420px){
+	#search {
+		width: 80%;
+		height: 100%;
+	}
+
+	.form-submit {
+		margin-left: -37px;
+	}
+}
+@media (max-width: 380px){
+	#search {
+		width: 60%;
+		height: 100%;
+	}
+
+	.form-submit {
+		margin-left: -76px;
+	}
+}

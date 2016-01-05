@@ -1,0 +1,168 @@
+.listfont {
+	color: #406EA1;
+	font-size: 100%;
+}
+
+img.book-page-cover {
+	width: auto;
+	max-width: 22em;
+	min-height: 27em;
+	height: auto;
+	vertical-align: top;
+}
+
+.space {
+	margin-top: 15px;
+}
+
+.td-left {
+	padding-left: 1.5em;
+}
+
+.fb-blue {
+	color: #406EA1;
+}
+
+h4.metadata {
+	font-size: 1.2em;
+}
+
+.gray {
+	color: #999999;
+}
+
+.ui {
+	border: 1px solid #a3d5a5;
+	background-color: #a3d5a9;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.ui-state-default {
+	border: 1px solid #ddd;
+	background-color: #eee;
+	color: #4D4D4D;
+	border-radius: 5px;
+}
+
+a.ui-state-hover:hover {
+	text-decoration: none;
+	border: 1px solid #5FAB8C;
+	background-color: #5FAB8C;
+}
+
+.ui-button {
+	display: inline-block;
+	position: relative;
+	padding: 0;
+	margin-right: .1em;
+	text-decoration: none!important;
+	cursor: pointer;
+	text-align: center;
+	zoom: 1;
+	overflow: visible;
+}
+
+.ui-button-text {
+	display: block;
+	line-height: 1.4;
+	padding: 0.4em 1em;
+	color: #fff;
+	font-size: 80%;
+	font-weight: 100;
+}
+
+.ui-button-text-col {
+	color: #4D4D4D;
+	line-height: 1.4;
+	padding: 0.4em 1em;
+	font-size: .75em;
+	font-weight: 100;
+}
+
+.pre-scan, .download {
+	float: left;
+}
+
+.ui-download {
+	border: 1px solid #35C0Cd;
+	background-color: #35C0Cd;
+	color: #fff;
+	border-radius: 5px;
+}
+
+a.ui-download-state:hover {
+	text-decoration: none;
+	border: 1px solid #2EA7B2;
+	background-color: #2EA7B2;
+}
+
+span.heading{
+	display: inline-block;
+	margin: .2em .2em .2em 0;
+}
+
+table, .book-cover, .book-detail {
+	display: inline-block;
+}
+
+.book-detail {
+	vertical-align: top;
+	width: auto;
+}
+
+.table-book{
+	width: auto;
+}
+
+.dropdown-backcolor {
+	background-color: #F5F5F5;
+}
+
+.glyphicon-heart-bk {
+	color: #C9EAEB;
+	font-size: 150%;
+}
+
+.glyphicon-heart-bk-click {
+	color: #52A5C9;
+	font-size: 150%;
+}
+
+.carousel-indicators > li.slide-libk {
+	background-color: #C7E0E2;
+	border: 0;
+}
+
+.carousel-indicators > li.slide-libk.active {
+	background-color: #35C0Cd;
+	border: 0;
+}
+
+.table-site {
+	margin: 0 auto;
+}
+
+.td-widmax {
+	max-width: 30em;
+}
+
+@media (max-width: 768px) {
+	.book-cover{
+		width: 100%;
+		text-align: center;
+		height: auto;
+	}
+
+	img.book-page-cover {
+		width: auto;
+		max-width: 22em;
+		min-height: 20em;
+		max-height: 20em;
+		height: auto;
+	}
+
+	table, .book-cover, .book-detail {
+		display: table;
+}
+}

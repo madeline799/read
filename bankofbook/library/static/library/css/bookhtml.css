@@ -1,0 +1,277 @@
+#main {
+	width: 100%;
+	height: auto;
+	top: 5%;
+	border-radius: 5px;
+	background: #fff;
+	-webkit-transition: -webkit-transform .4s, width .2s;
+	-moz-transition: -webkit-transform .4s, width .2s;
+	-moz-box-shadow:	inset 0 0 50px rgba(0,0,0,.1);
+	-webkit-box-shadow: inset 0 0 50px rgba(0,0,0,.1);
+	box-shadow: inset 0 0 50px rgba(0,0,0,.1);
+}
+
+#titlebar {
+	padding: 10px;
+}
+
+#titlebar a {
+	width: 18px;
+	height: 19px;
+	line-height: 20px;
+	overflow: hidden;
+	display: inline-block;
+	opacity: .5;
+	padding: 4px;
+	border-radius: 5px;
+}
+
+#titlebar a:hover {
+	opacity: 1;
+	border: 1px rgba(0,0,0,.2) solid;
+	padding: 3px;
+}
+
+#viewer {
+	margin: 0 auto;
+}
+
+.contents {
+	font-size: 18px;
+	color: #fff;
+	margin-left: 5px;
+}
+
+#sidebar {
+	background: #BFDCF5;
+	position: fixed;
+	top: 102px;
+	min-width: 255px;
+	width: auto;
+	-webkit-transition: -webkit-transform .5s;
+	-moz-transition: -moz-transform .5s;
+	overflow: hidden;
+	z-index: 1;
+}
+
+#main.closed {
+	-webkit-transform: translate(250px, 0);
+	-moz-transform: translate(250px, 0);
+	transform: translate(250px, 0);
+}
+
+#panels {
+	background: #23527C;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	padding: 10px 0;
+	height: 35px;
+	-moz-box-shadow: 0px 1px 3px rgba(0,0,0,.6);
+	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,.6);
+	box-shadow: 0px 1px 3px rgba(0,0,0,.6);
+}
+
+#opener {
+	float: left;
+	position:fixed;
+	top:102px;
+	z-index: 999999;
+}
+
+.opener {
+	left: 250px;
+	z-index: 1;
+}
+
+#opener #slider{
+	width: 26px;
+	height: 27px;
+	cursor: pointer;
+} 
+
+#tocView {
+	overflow-x: hidden;
+	overflow-y: hidden;
+	min-width: 255px;
+	width: auto;
+	height: auto;
+	visibility: hidden;
+	-webkit-transition: visibility 0 ease .5s;
+	-moz-transition: visibility 0 ease .5s;
+	transition: visibility 0 ease .5s;
+}
+
+#tocView > ul {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-left: 20px;
+  display: block;
+}
+
+#tocView li {
+  margin-bottom:10px;
+  width: 225px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  list-style: none;
+  text-transform: capitalize;
+}
+
+#tocView li:active,
+#tocView li.currentChapter
+{
+  list-style: none;
+}
+
+.list_item a {
+  color: #337AB7;
+  text-decoration: none;
+}
+
+.list_item a.chapter {
+  font-size: 1em;
+}
+
+.list_item a.section {
+  font-size: .8em;
+}
+
+.list_item.currentChapter > a,
+.list_item a:hover {
+  color: #fefefe;
+}
+
+.list_item a:hover {
+  color: #fefefe;
+}
+
+.list_item ul {
+  padding-left:10px;
+  margin-top: 8px;
+  display: none;
+}
+
+.list_item.currentChapter > ul {
+  display: block;
+}
+
+#sidebar.open #tocView,
+#sidebar.open {
+	overflow-y: auto;
+	visibility: visible;
+	-webkit-transition: visibility 0 ease 0;
+	-moz-transition: visibility 0 ease 0;
+	transition: visibility 0 ease 0;
+}
+
+#sidebar.open #tocView {
+	display: block;
+}
+
+#tocView.hidden {
+	display: none;
+}
+
+.view {
+	display: none;
+	overflow-y: auto;
+}
+
+#current-book {
+	position: fixed;
+	left: 25%;
+	top: 25%;
+}
+
+#current-title {
+	display: inline-block;
+}
+
+div.left-rectangle {
+	width:10px;
+	border-top-right-radius:5px;
+	background:#23527C;
+	height:auto;
+}
+
+div.circle {
+	width: 25px;
+	height: 25px;
+	background-color: #23527C;
+	position: absolute;
+	border-radius: 25px;
+	top: 30%;
+	color: #fff;
+	font-size: 12px;
+	padding-top: 2.5px;
+}
+
+span.list-color {
+	color:#337AB7;
+}
+
+img.img-responsive, #library-modal-title {
+	display: inline-block;
+}
+
+#library-username, #library-password, #library-submit {
+	background: #eee;
+	padding: 7px;
+	border-top-left-radius: 8px;
+	width: 65%;
+	border:0px;
+	border-bottom-color: #000;
+}
+
+#library-submit {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 8px;
+	background: #499393;
+	color:#fff;
+}
+
+#library-submit:hover {
+	background: #186060;
+}
+
+#library-signup {
+	float: right;
+	margin-top: 3.2em;
+	font-size: 12px;
+}
+
+div.modal-dialog {
+	margin-top: 10%;
+}
+
+#annotationIconCover {
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	width: 36px;
+	height: 36px;
+	z-index: 99999;
+	display: none;
+	outline: none;
+}
+
+@media (max-width: 992px) {
+	div.modal-dialog {
+		margin-top: 20%;
+	}
+}
+
+@media (max-width: 768px) {
+	#sidebar {
+		top: 50px;
+	}
+
+	#opener {
+		top: 50px;
+	}
+
+	div.modal-dialog {
+		margin-top: 25%;
+	}
+}

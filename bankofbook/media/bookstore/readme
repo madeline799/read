@@ -1,0 +1,9 @@
+#################################
+NOTICE: how to enabel gtb file.
+
+Folder named 'gtb' should show at here (media/bookstore/), gtb foler is the 
+directory that contains sub-directory 0-9, here is the commoand to setup it:
+
+cd bankofbook/media/bookstore/
+ln -s path/to/gtb 
+ln -s path/to/gtb.cover

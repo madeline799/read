@@ -1,0 +1,177 @@
+{% extends "library/base.html" %}
+{% load staticfiles %}
+
+
+{% block title %}
+	{% for bookdetail in bookdetails %}
+	{{ bookdetail.title }}
+	{% endfor %}
+{% endblock title %}
+
+{% block extra_page_css %}
+<link href="{% static "library/css/book.css" %}" rel="stylesheet">
+{% endblock extra_page_css %}
+
+{% block content %}
+<div class="container">
+{% if bookcovers and bookcovers|length > 1 %}
+	<table id="table-site" class="table-site"><tr><td>
+	<div id="carousel-example-generic" class="carousel slide book-cover" data-ride="carousel">
+	<!-- Indicators -->
+		<ol class="carousel-indicators">
+		{% for bookcover in bookcovers %}
+			{% if forloop.first %}
+				<li data-target="#carousel-example-generic" data-slide-to="{{ forloop.counter0 }}" class="active slide-libk"></li>
+			{% else %}
+				<li data-target="#carousel-example-generic" data-slide-to="{{ forloop.counter0 }}" class="slide-libk"></li>
+			{% endif %}
+		{% endfor %}
+		</ol>
+
+	<!-- Wrapper for slides -->
+	<div class="carousel-inner" role="listbox">
+		{% for bookcover in bookcovers %}
+			{% if forloop.first %}
+				<div class="item active">
+					<img src="{% static bookcoverpath|add:bookcover.cover %}" class="book-page-cover space">
+					<div class="carousel-caption">
+						<!-- <span id="heart" class="glyphicon glyphicon-heart glyphicon-heart-bk" aria-hidden="true"></span> -->
+					</div>
+				</div>
+			{% else %}
+				<div class="item">
+					<img src="{% static bookcoverpath|add:bookcover.cover %}" class="book-page-cover space">
+					<div class="carousel-caption">
+						<!-- <span id="heart-more" class="glyphicon glyphicon-heart glyphicon-heart-bk" aria-hidden="true"></span> -->
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<!-- Controls -->
+		<a class="left carousel-control space" href="#carousel-example-generic" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control space" href="#carousel-example-generic" role="button" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
+	</div>
+	</td></tr></table>
+	{% elif bookcovers and bookcovers|length == 1 %}
+		{% for bookcover in bookcovers %}
+			<div class="book-cover">
+				{% for bookdetail in bookdetails %}
+					<img src="{% static bookcoverpath|add:bookcover.cover %}" class="book-page-cover space" title="{{ bookdetail.title }}">
+				{% endfor %}
+			</div>
+		{% endfor %}
+	{% else %}
+		<div class="book-cover">
+			{% for bookdetail in bookdetails %}
+				<img class="book-page-cover space" src="{% static "library/img/book-cover.png" %}" title="{{ bookdetail.title }}">
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	<div class="book-detail">
+		<table class="table-book">
+			<tr>
+				<td class="td-left">
+					<table>
+						<tr>
+							<td class="td-widmax">
+								{% for bookdetail in bookdetails %}
+								<h2 class="fb-blue">{{ bookdetail.title }}</h2>
+								{% endfor %}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h4 class="metadata">
+								<em>
+								{% for bookdetail in bookdetails %}
+								<a href="#" class="gray" title="{{ bookdetail.first_names }} {{ bookdetail.last_name }}">{{bookdetail.first_names}}&nbsp;&nbsp;{{bookdetail.last_name}} ({{bookdetail.birth_year}}--{{bookdetail.death_year}})</a>
+								{% endfor %}
+								</em>
+								</h4>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="pre-scan">
+								<h3>
+									{% if book.id %}
+									<a href="{% url "library:bookhtml" book.id %}" class="ui ui-button ui-state-hover" rel="nofollow" target="_blank">
+									<span class="ui-button-text">在线阅读</span>
+									</a>
+									{% endif %}
+								</h3>
+								</div>
+								<div class="download">
+								<h3>
+									<span>
+									{% if bookdownloadpath %}
+									<a href="{% static bookdownloadpath %}" class="ui-download ui-button ui-download-state" rel="nofollow">
+										<span class="ui-button-text">下载</span>
+									</a>
+									{% endif %}
+									</span>
+								</h3>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h5>
+									<span class="listfont">语言:&nbsp;&nbsp;</span>
+									{% for bookdetail in bookdetails %}
+									{{ bookdetail.language }}
+									{% endfor %}
+								</h5>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							<span class="listfont">下载次数:&nbsp;&nbsp;</span>
+							{% for bookdetail in bookdetails %}
+							{{ bookdetail.downloads }}
+							{% endfor %}
+							</td>
+						</tr>
+						<tr><td><br /><h5><span class="listfont">分类:</h5></span></td></tr>
+						<tr>
+							<td>
+								{% for lccdetail in lccdetails %}
+								<span>
+									<a href="{% url "library:category" lccdetail.lcc %}" class="ui ui-button ui-state-default" title="{{ lccdetail.lcc }}" target="_blank">
+									<span class="ui-button-text-col">{{ lccdetail.lcc }}</span>
+									</a>
+								</span>
+								{% endfor %}
+							</td>
+						</tr>
+						<tr><td><h5><span class="listfont">主题:</h5></span></td></tr>
+						<tr>
+							<td class="td-widmax">
+								{% for lcshdetail in lcshdetails %}
+								<span class="heading">
+									<a href="" class="ui ui-button ui-state-default" title="{{ lcshdetail.lcsh }}">
+									<span class="ui-button-text-col">{{ lcshdetail.lcsh }}</span>
+									</a>
+								</span>
+								{% endfor %}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+{% endblock content %}
+
+{% block extra_page_js %}
+<script type="text/javascript" src="{% static "library/js/book.js" %}"></script>
+{% endblock extra_page_js %}

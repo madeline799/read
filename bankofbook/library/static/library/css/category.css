@@ -1,0 +1,252 @@
+.lcc-des-color {
+		color: #689AD3;
+}
+
+.chevron-right {
+		float: right;
+}
+
+.chevron-margin {
+		margin: -15px -5px;
+}
+
+.cursor-down {
+		cursor: pointer;
+}
+
+.large {
+		font-size: 150%;
+}
+
+.middle {
+		font-size: 120%;
+}
+
+.table-info {
+		padding-top: 10px;
+		vertical-align: top;
+}
+
+.book_cover {
+		width: auto;
+		height: auto;
+		float:left;
+		min-height: 165px;
+		min-width: 135px;
+		max-height: 180px;
+		max-width:150px;
+		display: block;
+}
+
+#body-content {
+		margin-top: 10px; 
+		margin-left: 0px;
+		margin-right: 0px;
+}
+
+/* nav sitemenu */
+.panel-group.nav-sitemenu .panel {
+		text-decoration: none;
+}
+
+.panel-group.nav-sitemenu .panel {
+		border-radius: 0px;
+		border-top: 0px;
+		margin-top: 0px;
+}
+
+.current{
+	color: #F98845;
+}
+
+.dropdown-backcolor {
+	background-color: #F5F5F5;
+}
+
+.collapse-padding {
+	padding: 0;
+}
+
+span.glyphicon-chevron-down {
+	font-size: 85%;
+	color: #666;
+}
+
+.panel-default > div[aria-expanded="true"] .chevron {
+	transform: rotate(-180deg);
+	-moz-transform: rotate(-180deg);
+	-webkit-transform: rotate(-180deg);
+	-ms-transform:rotate(-180deg); 
+	-o-transform:rotate(-180deg);
+}
+
+a.list-group-item-click{
+	background-color: #CDE5EA;
+	position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+}
+
+.sword-bk {
+	background-color:#FCF078;
+}
+
+#pagination-page, #pagination-form {
+	display: inline;
+}
+
+ul, ol {
+	float: left;
+}
+
+.pagination-item {
+	float:left;
+	border:1px solid #ccc;
+	width:auto;
+	text-align:center;
+	list-style:outside none none;
+	padding:5px;
+	min-width: 3em;
+}
+
+.pagination-submit {
+	border:1px solid #ccc;
+	width:auto;
+	color: #555;
+	background: #fff;
+	text-align:center;
+	padding:5px;
+}
+
+.pagination-submit:hover {
+	border:1px solid #337AB7;
+	width:auto;
+	background: #337AB7;
+	color: #fff;
+	text-align:center;
+	padding:5px;
+}
+
+.pagination-item-turn {
+	float:left;
+	border:1px solid #ccc;
+	width:auto;
+	text-align:center;
+	list-style:outside none none;
+	padding:5px;
+}
+
+.pagination-item-cur {
+	float:left;
+	border:1px solid #337AB7;
+	width:auto;
+	min-width:3em;
+	color:fff;
+	padding:5px;
+	background:#337AB7;
+	text-align:center;
+	list-style:outside none none;
+}
+
+.pagination-current-text {
+	color:#fff;
+}
+
+.pagination-page-text {
+	color:#555;
+}
+
+.pagination-margin-right {
+	margin-right:5px;
+}
+
+.pagination-margin-left {
+	margin-left:5px;
+}
+
+.pagination-margin-top {
+	margin-top:5px;
+}
+
+.pagination-margin-bottom {
+	margin-bottom:5px;
+}
+
+#pagination-items, #pagination-summary-pages {
+	display:inline-block;
+}
+
+a:hover, a:link {
+	text-decoration: none;
+}
+
+li.pagination-item:hover {
+	border-top: 1px solid #337AB7;
+	border-bottom: 1px solid #337AB7;
+	color: #337AB7;
+	cursor: pointer;
+}
+
+#pagination-summary-pages {
+	float:right;
+}
+
+.jump-page {
+	width: 4em;
+}
+
+.summary-page-padding {
+	padding: 5px;
+}
+
+.page-text-color {
+	color:#aaa;
+}
+
+.pagination-items-ul {
+	float: right;
+}
+
+@media (max-width: 768px) {
+	#navigation1, #navigation2{
+		display: inline-block;
+		z-index: 2222;
+	}
+
+	#navigation2{
+		position: absolute;
+	}
+
+	.navbar-margin {
+		margin: 0;
+	}
+
+	#navigation-small {
+		display: none;
+	}
+}
+
+@media (min-width: 768px) {
+	#navigation1 {
+		display: none;
+	}
+}
+
+@media (max-width: 992px) {
+	#pagination-large {
+		display: none;
+	}
+
+	#pre1, #pre2, #next1, #next2 {
+		display: none;
+	}
+}
+
+@media (min-width: 992px) {
+	#pagination-small {
+		display: none;
+	}
+}

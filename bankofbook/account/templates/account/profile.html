@@ -1,0 +1,81 @@
+{% extends "library/base.html" %}
+{% load staticfiles %}
+
+
+{% block title %}
+用户信息
+{% endblock title %}
+
+
+{% block extra_page_css %}
+<link rel="stylesheet" href="{% static "account/css/profile.css" %}">
+{% endblock extra_page_css %}
+
+{% block content %}
+<div class="container">
+	<h2>我的账户信息</h2>
+	<div id="info">
+		<div id="infoAvatar" class="profileAvatar">
+			{% if avatarsrc %}
+			<img src="{{ avatarsrc }}">
+			{% else %}
+			<img src="{% static "library/img/bankofbook-toy.png" %}" class="avatarDefault">
+			{% endif %}
+			<a href="{% url "account:uploadAvatar" %}" class="profileUpload"><span>编辑头像</span></a>
+		</div>
+
+		<div id="infoAccount" style="margin-left:2em;">
+			<br><label>账户名称: </label> {{ user.username }}<br>
+			<br><label>开户时间: </label> {{ user.date_joined }}<br>
+			<br><label>上次访问: </label> {{ user.last_login }}<br>
+			<br><label>电子邮箱: </label> {{ user.email }}<br>
+		</div>
+	</div>
+
+	{% if readinglist %}
+	<h2>我的阅读足迹</h2>
+	<div style="margin-left:2em;">
+		{% for item in readinglist %}
+			<a href="{% url "library:book" item.id %}">
+				<div class="progress" style="position:relative">
+					{% ifequal item.id userbooklistcurrent.book_id %}
+					<div class="progress-bar progress-bar-info
+								progress-bar-striped active"
+					{% else %}
+					<div class="progress-bar progress-bar-info"
+					{% endifequal %}
+						role="progressbar"
+						aria-valuenow="0"
+						aria-valuemin="0"
+						aria-valuemax="100"
+						style="width: {{ item.position|floatformat:2|cut:"0."}}%;
+								min-width:2.5em;
+								position:absolute;left:0;top:0;">
+					</div>
+					<span style="z-index:2222;color:#000000;
+						position:absolute;left:0;top:0;">
+						{{ item.position|floatformat:2|cut:"0."}}% {{ item.title}}
+					</span>
+				</div>
+			</a>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if annotation %}
+	<h2>我的注释</h2>
+	<div style="margin-left:2em;">
+	{% for ann in annotation %}
+		<table style="border:1px solid #eee;">
+			<tr>
+				<td style="color:#23527c;padding:5px;">{{ ann.text }}</td>
+				<td style="background:#555;color:#fff;padding:2px;">&gt;</td>
+				<td style="background:rgb(112,186,224);color:#fff;padding-left:10px;">{{ ann.quote }}</td>
+			</tr>
+		</table>
+		<div style="color:#333;border-bottom:1px solid #eee;padding-top:5px;">创建于:{{ ann.created }}</div><br>
+	{% endfor %}
+	</div>
+	{% endif %}
+</div>
+{% endblock content %}

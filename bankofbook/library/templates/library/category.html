@@ -1,0 +1,570 @@
+{% extends "library/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+	{% if lcc == "Search" %} 
+		{{ searchkeywords }}&nbsp;-&nbsp;书行
+	{% elif lcc == "Hotest" %}
+		畅销书&nbsp;-&nbsp;书行
+	{% elif lcc = "Latest" %}
+		新书发布&nbsp;-&nbsp;书行
+	{% else %}
+		{{ lccdes }}&nbsp;-&nbsp;书行
+	{% endif %}
+{% endblock title %}
+
+{% block extra_page_css %}
+<link href="{% static "library/css/category.css" %}" rel="stylesheet">
+{% endblock extra_page_css %}
+
+{% block indeximage %}
+<div class="container">
+	<img src="{% static "library/img/indexbankofbook.png" %}"
+	class="img-responsive hidden-xs"
+	style="margin-left: auto; margin-right: auto;">
+</div>
+{% endblock indeximage %}
+
+{% block left %}
+	<div id="pagination-large" class="container">
+		{% if bookinfos %}
+				<div class="pagination chevron-right pagination-margin-top pagination-margin-bottom">
+					<span id="pagination-page">
+					<ul id="pagination-items">
+					{% if bookinfos.has_previous %}
+						{% if searchkeywords|default:"default" == "default" or searchkeywords|default_if_none:"default_if_none " == "default_if_none" %}
+							<a href="?page={{ bookinfos.previous_page_number }}">
+								<li class="pagination-item-turn pagination-margin-right">
+									&lt;&nbsp;上一页
+								</li>
+							</a>
+							<span id="pre1">
+							{% if firstPage >= 2 %}
+								<a href="?page=1" class="pagination-page-text">
+									<li class="pagination-item">
+										1
+									</li>
+								</a>
+								{% if firstPage != 2 %}
+									<li class="pagination-item">
+										<span>...</span>
+									</li>
+								{% endif %}
+							{% endif %}
+							{% if rangePaginatorPrev %}
+								{% for prev in rangePaginatorPrev %}
+								<a href="?page={{ prev }}" class="pagination-page-text">
+									<li class="pagination-item">
+										{{ prev }}
+									</li>
+								</a>
+								{% endfor %}
+							{% endif %}
+							</span>
+						{% else %}
+							<a href="?keywords={{ searchkeywords }}&page={{ bookinfos.previous_page_number }}">
+								<li class="pagination-item-turn pagination-margin-right">
+									&lt;&nbsp;上一页
+								</li>
+							</a>
+							<span id="pre2">
+							{% if firstPage >= 2 %}
+								<a href="?keywords={{ searchkeywords }}&page=1" class="pagination-page-text">
+									<li class="pagination-item">
+										1
+									</li>
+								</a>
+								{% if firstPage != 2 %}
+									<li class="pagination-item">
+										<span>...</span>
+									</li>
+								{% endif %}
+							{% endif %}
+							{% if rangePaginatorPrev %}
+								{% for prev in rangePaginatorPrev %}
+								<a href="?keywords={{ searchkeywords }}&page={{ prev }}" class="pagination-page-text">
+									<li class="pagination-item">
+										{{ prev }}
+									</li>
+								</a>
+								{% endfor %}
+							{% endif %}
+							</span>
+						{% endif %}
+					{% endif %}
+							<li class="pagination-item-cur">
+								<span class="pagination-current-text">{{ bookinfos.number }}</span>
+							</li>
+					{% if bookinfos.has_next %}
+						{% if searchkeywords|default:"default" == "default" or searchkeywords|default_if_none:"default_if_none " == "default_if_none" %}
+							<span id="next1">
+							{% if rangePaginatorNext %}
+								{% for next in rangePaginatorNext %}
+								<a href="?page={{ next }}" class="pagination-page-text">
+									<li class="pagination-item">
+										{{ next }}
+									</li>
+								</a>
+								{% endfor %}
+							{% endif %}
+							{% if lastPage <= paginator.num_pages %}
+								{% if lastPage != paginator.num_pages %}
+									<li class="pagination-item">
+										<span>...</span>
+									</li>
+								{% endif %}
+								<a href="?page={{ paginator.num_pages }}" class="pagination-page-text">
+									<li class="pagination-item">
+										{{ paginator.num_pages }}
+									</li>
+								</a>
+							{% endif %}
+							</span>
+							<a href="?page={{ bookinfos.next_page_number }}">
+								<li class="pagination-item-turn pagination-margin-left">
+									下一页&nbsp;&gt;
+								</li>
+							</a>
+						{% else %}
+							<span id="next2">
+							{% if rangePaginatorNext %}
+								{% for next in rangePaginatorNext %}
+									<a href="?keywords={{ searchkeywords }}&page={{ next }}" class="pagination-page-text">
+										<li class="pagination-item">{{ next }}</li>
+									</a>
+								{% endfor %}
+							{% endif %}
+							{% if lastPage <= paginator.num_pages %}
+								{% if lastPage != paginator.num_pages %}
+									<li class="pagination-item">
+										<span>...</span>
+									</li>
+								{% endif %}
+								<a href="?keywords={{ searchkeywords }}&page={{ paginator.num_pages }}" class="pagination-page-text">
+									<li class="pagination-item">
+										{{ paginator.num_pages }}
+									</li>
+								</a>
+							{% endif %}
+							</span>
+								<a href="?keywords={{ searchkeywords }}&page={{ bookinfos.next_page_number }}">
+									<li class="pagination-item-turn pagination-margin-left">下一页&nbsp;&gt;</li>
+								</a>
+						{% endif %}
+					{% endif %}
+					</ul>
+					</span>
+					<div id="pagination-summary-pages">
+						<span class="summary-page-padding">
+							<span class="page-text-color">共</span><span class="pagination-page-text">{{ bookinfos.paginator.num_pages }}</span><span class="page-text-color">页</span>
+						</span>
+						{% if searchkeywords|default:"default" == "default" or searchkeywords|default_if_none:"default_if_none " == "default_if_none" %}
+							<form action="{% url "library:category" lcc %}" method="get" id="pagination-form">
+							<span class="pagination-page-text">
+								到第<input type="number" aria-label="页码" max="{{ paginator.num_pages }}" min="1" name="page" class="jump-page" required>页
+							</span>
+							<input type="submit" class="pagination-submit" value="确定">
+							</form>
+						{% else %}
+							<form action="{% url "library:search" %}" method="get" id="pagination-form">
+							<input type="hidden" aria-label="" name="keywords" value="{{ searchkeywords }}">
+							<span class="pagination-page-text">
+								到第<input type="number" aria-label="页码" max="{{ paginator.num_pages }}" min="1" name="page" class="jump-page" required>页
+							</span>
+							<input type="submit" class="pagination-submit" value="确定">
+							</form>
+						{% endif %}
+					</div>
+				</div>
+		{% endif %}
+	</div>
+
+	<div class="container">
+	<div id="body-content" class="clearfix row">
+		<div id="left-side" class="col-sm-3 col-md-3 col-lg-3">
+			<nav id="navigation1" class="navbar navbar-default navbar-margin">
+				<div id="left-navigation" class="navbar-header">
+					<button id="btn-nav" type="button" class="navbar-toggle" data-toggle="dropdown"  style="border-color: #FFF;">
+						<span class="sr-only">Toggle navigation</span>
+						<span>导航栏</span>
+						<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-backcolor" role="menu">
+						<li><a href="/library/category/Hotest"><span class="lcc-color">畅销书</span> <span class="sr-only">(current)</span></a></li>
+						<li><a href="/library/category/Latest"><span class="lcc-color">新书发布</span></a></li>
+					</ul>
+				</div>
+			</nav>
+			<nav id="navigation2" class="navbar navbar-default navbar-margin">
+				<div id="left-category" class="navbar-header">
+					<button id="btn-category" type="button" class="navbar-toggle category-left btn-default" data-toggle="collapse" data-target="#bs-example-navbar-collapse-left-category" style="border-color: #FFF;">
+						<span class="sr-only">Toggle navigation</span>
+						<span>图书分类</span>
+						<span class="glyphicon glyphicon-th"></span>
+					</button>
+				</div>	
+				<div class="collapse navbar-collapse collapse-padding" id="bs-example-navbar-collapse-left-category">
+					<div class="panel-group hide-sm nav-sitemenu">
+					{% for lccclassitem in lccclass %}
+						<div class="panel panel-default">
+							<div id="panel-heading" class="panel-heading cursor-down" aria-hidden="true" data-target="#nav-panel-{{ lccclassitem.id }}" data-toggle="collapse">
+								<h4 class="panel-title">
+									 <span class="lcc-color"><strong>{{ lccclassitem.lcc }}</strong></span>&nbsp;&nbsp;
+									 <span class="lcc-des-color">{{ lccclassitem.description_cn }}</span>
+								</h4>
+								<span class="glyphicon glyphicon-chevron-down chevron-right chevron-margin cursor-down chevron" aria-hidden="true">
+								</span>
+							</div>
+							{% if lcctrue == 1 and lcc|make_list|first == lccclassitem.lcc %}
+								<div id="nav-panel-{{ lccclassitem.id }}" class="list-group panel-collapse collapse in">
+								<!-- how many lcshs -->
+								{% for lccsub in lccsubclass %}
+									{% if lcc == lccsub.lcc %}
+									<a class="list-group-item-click" href="{% url "library:category" lccsub.lcc %}">{{ lccsub.lcc }}: {{ lccsub.description_cn }}-({{lccsub.cnt}})</a>
+									{% elif lccclassitem.lcc in lccsub.lcc|make_list|first %}
+									<a class="list-group-item" href="{% url "library:category" lccsub.lcc %}">{{ lccsub.lcc }}: {{ lccsub.description_cn }}-({{lccsub.cnt}})</a>
+									{% endif %}
+								{% endfor %}
+								<!-- end:how many lcshs -->
+								</div>
+							{% else %}
+								<div id="nav-panel-{{ lccclassitem.id }}" class="list-group panel-collapse collapse">
+								<!-- how many lcshs -->
+								{% for lccsub in lccsubclass %}
+									{% if lccclassitem.lcc in lccsub.lcc|make_list|first %}
+									<a class="list-group-item" href="{% url "library:category" lccsub.lcc %}">{{ lccsub.lcc }}: {{ lccsub.description_cn }}-({{lccsub.cnt}})</a>
+									{% endif %}
+								{% endfor %}
+								<!-- end:how many lcshs -->
+								</div>
+							{% endif %}
+						</div>
+					{% endfor %}
+					</div>
+				</div>
+			</nav>
+		</div>
+{% endblock left %}
+
+{% block right %}
+	{% if not bookinfos %}
+	<label><span class="middle">很抱歉，没有找到与&quot;{{ searchkeywords }}&quot;相关的书籍，请再次探索一下吧～</span></label>
+	<h5>温馨提示：</h5>
+	<ul>
+		<li>请检查您的输入是否正确</li>
+		<li>如网页存在，请提交网址给我们</li>
+		<li>如有任何意见或建议，请及时反馈给我们</li>
+	</ul> 
+	{% elif lcc == "Search" %}
+	<label><span class="middle">搜索结果</span></label>
+	{% elif lcc == "Hotest" %}
+	<label><span class="middle">畅销书</span></label>	
+	{% elif lcc = "Latest" %}
+	<label><span class="middle">新书发布</span></label>
+	{% else %}
+	<label><span class="middle">{{ lcc }}&nbsp;--&nbsp;{{ lccdes }}</span></label>
+	{% endif %}
+
+	<div id="pagination-small">
+		{% if bookinfos %}
+			<div name="pagination" class="pagination chevron-right pagination-margin-top pagination-margin-bottom">
+				<span id="pagination-page">
+				<ul id="pagination-items" name="pagination-ul">
+				{% if bookinfos.has_previous %}
+					{% if searchkeywords|default:"default" == "default" or searchkeywords|default_if_none:"default_if_none " == "default_if_none" %}
+						<a href="?page={{ bookinfos.previous_page_number }}">
+							<li class="pagination-item-turn pagination-margin-right">
+								&lt;&nbsp;上一页
+							</li>
+						</a>
+					{% else %}
+						<a href="?keywords={{ searchkeywords }}&page={{ bookinfos.previous_page_number }}">
+							<li class="pagination-item-turn pagination-margin-right">
+								&lt;&nbsp;上一页
+							</li>
+						</a>
+					{% endif %}
+				{% endif %}
+						<li class="pagination-item-cur">
+							<span class="pagination-current-text">{{ bookinfos.number }}</span>
+						</li>
+				{% if bookinfos.has_next %}
+					{% if searchkeywords|default:"default" == "default" or searchkeywords|default_if_none:"default_if_none " == "default_if_none" %}
+						<a href="?page={{ bookinfos.next_page_number }}">
+							<li class="pagination-item-turn pagination-margin-left">
+								下一页&nbsp;&gt;
+							</li>
+						</a>
+					{% else %}
+						<a href="?keywords={{ searchkeywords }}&page={{ bookinfos.next_page_number }}">
+							<li class="pagination-item-turn pagination-margin-left">下一页&nbsp;&gt;</li>
+						</a>
+					{% endif %}
+				{% endif %}
+				</ul>
+				</span>
+				<div id="pagination-summary-pages">
+					<span class="summary-page-padding">
+						<span class="page-text-color">共</span><span class="pagination-page-text">{{ bookinfos.paginator.num_pages }}</span><span class="page-text-color">页</span>
+					</span>
+					{% if searchkeywords|default:"default" == "default" or searchkeywords|default_if_none:"default_if_none " == "default_if_none" %}
+						<form action="{% url "library:category" lcc %}" method="get" id="pagination-form">
+						<span class="pagination-page-text">
+							到第<input type="number" aria-label="页码" max="{{ paginator.num_pages }}" min="1" name="page" class="jump-page" required>页
+						</span>
+						<input type="submit" class="pagination-submit" value="确定">
+						</form>
+					{% else %}
+						<form action="{% url "library:search" %}" method="get" id="pagination-form">
+						<input type="hidden" aria-label="" name="keywords" value="{{ searchkeywords }}">
+						<span class="pagination-page-text">
+							到第<input type="number" aria-label="页码" max="{{ paginator.num_pages }}" min="1" name="page" class="jump-page" required>页
+						</span>
+						<input type="submit" class="pagination-submit" value="确定">
+						</form>
+					{% endif %}
+				</div>
+			</div>
+		{% endif %}
+	</div>
+
+	<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+				{% for bookinfo in bookinfos %}
+				<table id="bookinfo" class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-bottom:20px;">
+				<tr>
+					<td class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<a href="{% url "library:book" bookinfo.id %}" target="_blank" title="{{ bookinfo.title }}">
+						{% if bookinfo.cover %}
+						<img src="{% static bookcoverpath|add:bookinfo.cover %}" class="cover medium-cover book_cover" >
+						{% else %}
+						<img src="{% static "library/img/book-cover.png" %}" class="cover medium-cover book_cover" >
+						{% endif %}
+					</a>
+					</td>
+					<td class="col-xs-9 col-sm-9 col-md-9 col-lg-9 table-info" style="max-width:140px;">
+						<table>
+							<tr>
+								<td>
+									<a href="{% url "library:book" bookinfo.id %}" target="_blank">
+										<div class="large" title="{{ bookinfo.title }}">
+										{% if searchkeywords|default:"default" != "default" and searchkeywords|default_if_none:"default_if_none " != "default_if_none" %}
+											{% for sword in bookinfo.title.split %}
+												{% if searchkeywords|lower in sword|lower %}
+													<span class="sword-bk">{{ sword }}</span>
+												{% else %}
+													{{ sword }}
+												{% endif %}
+											{% endfor %}
+										{% else %}
+											{% if bookinfo.title|length > 30 %}
+												{{ bookinfo.title|slice:":30" }}<span>...</span>
+											{% else %}
+												{{ bookinfo.title }}
+											{% endif %}
+										{% endif %}
+										</div>
+									</a>
+								</td>
+							</tr>
+							<tr style="margin-top:0px;">
+								<td><em>
+										{% if searchkeywords|default:"default" != "default" and searchkeywords|default_if_none:"default_if_none " != "default_if_none" %}
+											{% for sword in bookinfo.first_names.split %}
+												{% if searchkeywords|lower in sword|lower %}
+													<span class="sword-bk">{{ sword }}</span>
+												{% else %}
+													{{ sword }}
+												{% endif %}
+											{% endfor %}
+
+											{% for sword in bookinfo.last_name.split  %}
+												{% if searchkeywords|lower in sword|lower %}
+													<span class="sword-bk">{{ sword }}</span>
+												{% else %}
+													{{ sword }}
+												{% endif %}
+											{% endfor %}
+										{% else %}
+											{% if bookinfo.first_names|add:bookinfo.last_name|length > 20 %}
+												{{ bookinfo.first_names|add:bookinfo.last_name|slice:":20" }}<span>...</span>
+											{% else %}
+												{% if bookinfo.first_names|add:bookinfo.last_name %}
+													{{ bookinfo.first_names|add:" "|add:bookinfo.last_name }}
+												{% else %}
+													{% if bookinfo.first_names|default_if_none:"default_if_none" != "default_if_none" %}
+														{{ bookinfo.first_names }}
+													{% endif %}
+													{% if bookinfo.last_name|default_if_none:"default_if_none" != "default_if_none" %}
+														{{ bookinfo.last_name }}
+													{% endif %}
+												{% endif %}
+											{% endif %}
+										{% endif %}
+									 </em></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				</table>
+				{% endfor %}
+			</div>
+	</div>
+</div>
+
+<div class="container">
+	{% if bookinfos %}
+			<div name="pagination" class="pagination chevron-right pagination-margin-top pagination-margin-bottom">
+				<span id="pagination-page">
+				<ul id="pagination-items" name="pagination-ul">
+				{% if bookinfos.has_previous %}
+					{% if searchkeywords|default:"default" == "default" or searchkeywords|default_if_none:"default_if_none " == "default_if_none" %}
+						<a href="?page={{ bookinfos.previous_page_number }}">
+							<li class="pagination-item-turn pagination-margin-right">
+								&lt;&nbsp;上一页
+							</li>
+						</a>
+						<span id="pre1">
+						{% if firstPage >= 2 %}
+							<a href="?page=1" class="pagination-page-text">
+								<li class="pagination-item">
+									1
+								</li>
+							</a>
+							{% if firstPage != 2 %}
+								<li class="pagination-item">
+									<span>...</span>
+								</li>
+							{% endif %}
+						{% endif %}
+						{% if rangePaginatorPrev %}
+							{% for prev in rangePaginatorPrev %}
+							<a href="?page={{ prev }}" class="pagination-page-text">
+								<li class="pagination-item">
+									{{ prev }}
+								</li>
+							</a>
+							{% endfor %}
+						{% endif %}
+						</span>
+					{% else %}
+						<a href="?keywords={{ searchkeywords }}&page={{ bookinfos.previous_page_number }}">
+							<li class="pagination-item-turn pagination-margin-right">
+								&lt;&nbsp;上一页
+							</li>
+						</a>
+						<span id="pre2">
+						{% if firstPage >= 2 %}
+							<a href="?keywords={{ searchkeywords }}&page=1" class="pagination-page-text">
+								<li class="pagination-item">
+									1
+								</li>
+							</a>
+							{% if firstPage != 2 %}
+								<li class="pagination-item">
+									<span>...</span>
+								</li>
+							{% endif %}
+						{% endif %}
+						{% if rangePaginatorPrev %}
+							{% for prev in rangePaginatorPrev %}
+							<a href="?keywords={{ searchkeywords }}&page={{ prev }}" class="pagination-page-text">
+								<li class="pagination-item">
+									{{ prev }}
+								</li>
+							</a>
+							{% endfor %}
+						{% endif %}
+						</span>
+					{% endif %}
+				{% endif %}
+						<li class="pagination-item-cur">
+							<span class="pagination-current-text">{{ bookinfos.number }}</span>
+						</li>
+				{% if bookinfos.has_next %}
+					{% if searchkeywords|default:"default" == "default" or searchkeywords|default_if_none:"default_if_none " == "default_if_none" %}
+						<span id="next1">
+						{% if rangePaginatorNext %}
+							{% for next in rangePaginatorNext %}
+							<a href="?page={{ next }}" class="pagination-page-text">
+								<li class="pagination-item">
+									{{ next }}
+								</li>
+							</a>
+							{% endfor %}
+						{% endif %}
+						{% if lastPage <= paginator.num_pages %}
+							{% if lastPage != paginator.num_pages %}
+								<li class="pagination-item">
+									<span>...</span>
+								</li>
+							{% endif %}
+							<a href="?page={{ paginator.num_pages }}" class="pagination-page-text">
+								<li class="pagination-item">
+									{{ paginator.num_pages }}
+								</li>
+							</a>
+						{% endif %}
+						</span>
+						<a href="?page={{ bookinfos.next_page_number }}">
+							<li class="pagination-item-turn pagination-margin-left">
+								下一页&nbsp;&gt;
+							</li>
+						</a>
+					{% else %}
+						<span id="next2">
+						{% if rangePaginatorNext %}
+							{% for next in rangePaginatorNext %}
+								<a href="?keywords={{ searchkeywords }}&page={{ next }}" class="pagination-page-text">
+									<li class="pagination-item">{{ next }}</li>
+								</a>
+							{% endfor %}
+						{% endif %}
+						{% if lastPage <= paginator.num_pages %}
+							{% if lastPage != paginator.num_pages %}
+								<li class="pagination-item">
+									<span>...</span>
+								</li>
+							{% endif %}
+							<a href="?keywords={{ searchkeywords }}&page={{ paginator.num_pages }}" class="pagination-page-text">
+								<li class="pagination-item">
+									{{ paginator.num_pages }}
+								</li>
+							</a>
+						{% endif %}
+						</span>
+							<a href="?keywords={{ searchkeywords }}&page={{ bookinfos.next_page_number }}">
+								<li class="pagination-item-turn pagination-margin-left">下一页&nbsp;&gt;</li>
+							</a>
+					{% endif %}
+				{% endif %}
+				</ul>
+				</span>
+				<div id="pagination-summary-pages">
+					<span class="summary-page-padding">
+						<span class="page-text-color">共</span><span class="pagination-page-text">{{ bookinfos.paginator.num_pages }}</span><span class="page-text-color">页</span>
+					</span>
+					{% if searchkeywords|default:"default" == "default" or searchkeywords|default_if_none:"default_if_none " == "default_if_none" %}
+						<form action="{% url "library:category" lcc %}" method="get" id="pagination-form">
+						<span class="pagination-page-text">
+							到第<input type="number" aria-label="页码" max="{{ paginator.num_pages }}" min="1" name="page" class="jump-page" required>页
+						</span>
+						<input type="submit" class="pagination-submit" value="确定">
+						</form>
+					{% else %}
+						<form action="{% url "library:search" %}" method="get" id="pagination-form">
+						<input type="hidden" aria-label="" name="keywords" value="{{ searchkeywords }}">
+						<span class="pagination-page-text">
+							到第<input type="number" aria-label="页码" max="{{ paginator.num_pages }}" min="1" name="page" class="jump-page" required>页
+						</span>
+						<input type="submit" class="pagination-submit" value="确定">
+						</form>
+					{% endif %}
+				</div>
+			</div>
+	{% endif %}
+</div>
+{% endblock right %}
+
+{% block extra_page_js %}
+<script type="text/javascript" src="{% static "library/js/category.js" %}"></script>
+{% endblock extra_page_js %}
